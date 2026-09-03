@@ -70,51 +70,17 @@ if app_mode == "红球表查询":
                 tab_table, tab_image = st.tabs(["📊 结构化数据表", "🖼️ 原版卡片图片"])
 
                 with tab_table:
-                    # 组装数据并转换格式
-                    table_data = []
+                    # 使用标准 Markdown 语法排版，避免 HTML 转义问题与任何内部滚动条
+                    md_lines = [
+                        "| 困难战役关卡 | 对应基地等级 | 芯尘速率 (个/h) |",
+                        "| :--- | :--- | :--- |"
+                    ]
                     for item in nodes:
                         dust = item["actual_dust"]
                         dust_display = int(dust) if dust == int(dust) else f"{dust:.2f}".rstrip('0').rstrip('.')
-                        table_data.append({
-                            "困难战役关卡": item["stage_name"],
-                            "对应基地等级": f"Lv.{item['target_level']}",
-                            "芯尘速率 (个/h)": dust_display
-                        })
+                        md_lines.append(f"| **{item['stage_name']}** | Lv.{item['target_level']} | `{dust_display}` |")
                     
-                    df = pd.DataFrame(table_data)
-                    
-                    # 转换为纯 HTML 表格，彻底移除组件内置滚动条
-                    html_table = df.to_html(index=False, classes="custom-red-table")
-                    
-                    custom_css = """
-                    <style>
-                        .custom-red-table {
-                            width: 100%;
-                            border-collapse: collapse;
-                            font-size: 15px;
-                            margin-top: 10px;
-                            margin-bottom: 25px;
-                            border: 1px solid #f0f0f0;
-                        }
-                        .custom-red-table th {
-                            background-color: #f8f9fa;
-                            color: #212529;
-                            font-weight: 600;
-                            text-align: left;
-                            padding: 12px 16px;
-                            border-bottom: 2px solid #dee2e6;
-                        }
-                        .custom-red-table td {
-                            padding: 10px 16px;
-                            border-bottom: 1px solid #f1f3f5;
-                            color: #333333;
-                        }
-                        .custom-red-table tr:hover {
-                            background-color: #f8f9fa;
-                        }
-                    </style>
-                    """
-                    st.markdown(custom_css + html_table, unsafe_allow_html=True)
+                    st.markdown("\n".join(md_lines))
 
                 with tab_image:
                     with st.spinner("正在渲染卡片..."):

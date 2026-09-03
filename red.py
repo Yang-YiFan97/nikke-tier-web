@@ -3,6 +3,7 @@ import re
 import math
 import io
 import base64
+import os
 from PIL import Image, ImageDraw, ImageFont
 
 STAGE_DB = "stage.db"
@@ -53,7 +54,7 @@ def get_stage_by_index(global_index: int):
     return row  # (chapter, stage_name)
 
 def generate_chapter_nodes(chapter_num: int):
-    """严格按照 Excel 逻辑提取前置节点，并追加当前章的 BOSS 关卡为最后一行"""
+    """严格按照关卡与等级换算逻辑提取前置节点，并追加当前章的 BOSS 关卡为最后一行"""
     boss_info = get_boss_stage_info(chapter_num)
     if not boss_info:
         return None
@@ -118,7 +119,7 @@ def generate_chapter_nodes(chapter_num: int):
     return pre_nodes
 
 def render_image(chapter_num: int, collected_nodes: list) -> str:
-    """将节点数据绘制为图片，全黑字、白底排版"""
+    """将节点数据绘制为图片，自动适配 Linux 与 Windows 字体"""
     width = 540
     padding_x = 35
     padding_top = 35
@@ -131,10 +132,21 @@ def render_image(chapter_num: int, collected_nodes: list) -> str:
     image = Image.new("RGB", (width, height), "white")
     draw = ImageDraw.Draw(image)
     
-    font_path_candidates = ["msyh.ttc", "msyhbd.ttc", "simhei.ttf", "arial.ttf"]
+    # 优先匹配 Linux (Streamlit Cloud) 字体，找不到再回落到 Windows 字体
+    font_path_candidates = [
+        "/usr/share/fonts/truetype/wqy/wqy-microhei.ttc",
+        "/usr/share/fonts/truetype/wqy/wqy-zenhei.ttc",
+        "wqy-microhei.ttc",
+        "msyh.ttc",
+        "msyhbd.ttc",
+        "simhei.ttf",
+        "arial.ttf"
+    ]
     title_font = header_font = body_font = None
     
     for font_path in font_path_candidates:
+        if os.path.isabs(font_path) and not os.path.exists(font_path):
+            continue
         try:
             title_font = ImageFont.truetype(font_path, 22)
             header_font = ImageFont.truetype(font_path, 22)

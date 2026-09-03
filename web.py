@@ -1,11 +1,10 @@
 import os
 import json
-import sqlite3
+import base64
 import pandas as pd
 import streamlit as st
-from PIL import Image
 
-# 引入已有模块
+# 引入项目业务与数据库管理器
 import red
 from db_manager import equip_db_manager, EQUIP_DB_PATH
 
@@ -48,14 +47,14 @@ if app_mode == "红球表查询":
             help="计算在不漏怪通关该普通章节时，对应的困难关卡与基地等级"
         )
     with col_action:
-        st.write("") # 占位对齐
+        st.write("")
         st.write("")
         query_btn = st.button("🔍 查询红球节点", use_container_width=True)
 
     if query_btn or "last_chapter" not in st.session_state or st.session_state.last_chapter == chapter_num:
         st.session_state.last_chapter = chapter_num
         
-        # 检查依赖数据库是否存在
+        # 验证底层数据库文件是否存在
         if not os.path.exists(red.STAGE_DB) or not os.path.exists(red.PROD_DB):
             st.error(f"⚠️ 未找到关卡数据库 `{red.STAGE_DB}` 或 `{red.PROD_DB}`，请确认文件已上传至运行目录。")
         else:
@@ -67,11 +66,11 @@ if app_mode == "红球表查询":
             else:
                 st.success(f"已生成【普通第 {chapter_num} 章】红球节点列表")
 
-                # 选项卡切换展示方式：原生表格 vs 原版图片卡片
+                # 选项卡展示
                 tab_table, tab_image = st.tabs(["📊 结构化数据表", "🖼️ 原版卡片图片"])
 
                 with tab_table:
-                    # 组装 DataFrame 显示
+                    # 组装数据并转换格式
                     table_data = []
                     for item in nodes:
                         dust = item["actual_dust"]
@@ -83,26 +82,15 @@ if app_mode == "红球表查询":
                         })
                     
                     df = pd.DataFrame(table_data)
-                    st.dataframe(
-                        df,
-                        use_container_width=True,
-                        hide_index=True
-                    )
+                    # 使用 st.table 完整展开表格，无内部滚动条
+                    st.table(df)
 
                 with tab_image:
-                    # 调用 red.py 原版渲染引擎渲染图片
                     with st.spinner("正在渲染卡片..."):
-                        # 复用 render_image 的绘图逻辑，直接获取图片对象
-                        # 兼容原函数提取 base64 并在网页端渲染
                         cq_code = red.render_image(int(chapter_num), nodes)
-                        # 从 CQ 码中截取 base64
                         b64_str = cq_code.split("base64://")[-1].rstrip("]")
-                        
-                        import io
-                        import base64
                         img_bytes = base64.b64decode(b64_str)
                         st.image(img_bytes, caption=f"第 {chapter_num} 章红球卡片", use_container_width=False)
-
 
 # =============================================================================
 # 功能页面 2：装备词条查询
@@ -117,7 +105,7 @@ elif app_mode == "装备词条查询":
         conn = equip_db_manager.get_connection()
         cursor = conn.cursor()
         
-        # 1. 读取所有指挥官（user_id）列表
+        # 读取指挥官列表
         cursor.execute("SELECT DISTINCT user_id FROM character_equips")
         user_rows = cursor.fetchall()
         user_list = [r[0] for r in user_rows if r[0]]
@@ -128,7 +116,7 @@ elif app_mode == "装备词条查询":
         else:
             selected_user = st.sidebar.selectbox("👤 选择指挥官", user_list)
 
-            # 2. 查询该指挥官拥有的所有角色
+            # 查询角色统计数据
             cursor.execute("""
                 SELECT char_name, stats_json, updated_at 
                 FROM character_stats 
@@ -141,7 +129,6 @@ elif app_mode == "装备词条查询":
             if not stats_rows:
                 st.warning("该指挥官名下暂无角色汇总数据。")
             else:
-                # 角色过滤搜索
                 search_kw = st.text_input("🔍 搜索角色名称：", placeholder="输入角色名过滤...")
                 
                 display_records = []
@@ -150,8 +137,6 @@ elif app_mode == "装备词条查询":
                         continue
                     
                     stats_dict = json.loads(stats_json) if stats_json else {}
-                    
-                    # 组装展现实体
                     display_records.append({
                         "角色": char_name,
                         "更新时间": updated_at,
@@ -160,7 +145,6 @@ elif app_mode == "装备词条查询":
 
                 st.markdown(f"共检索到 **{len(display_records)}** 个角色记录")
                 
-                # 列表卡片展开展示
                 for item in display_records:
                     with st.expander(f"📌 {item['角色']} (最近更新: {item['更新时间']})", expanded=False):
                         stats = item["属性汇总详情"]

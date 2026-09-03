@@ -82,8 +82,39 @@ if app_mode == "红球表查询":
                         })
                     
                     df = pd.DataFrame(table_data)
-                    # 使用 st.table 完整展开表格，无内部滚动条
-                    st.table(df)
+                    
+                    # 转换为纯 HTML 表格，彻底移除组件内置滚动条
+                    html_table = df.to_html(index=False, classes="custom-red-table")
+                    
+                    custom_css = """
+                    <style>
+                        .custom-red-table {
+                            width: 100%;
+                            border-collapse: collapse;
+                            font-size: 15px;
+                            margin-top: 10px;
+                            margin-bottom: 25px;
+                            border: 1px solid #f0f0f0;
+                        }
+                        .custom-red-table th {
+                            background-color: #f8f9fa;
+                            color: #212529;
+                            font-weight: 600;
+                            text-align: left;
+                            padding: 12px 16px;
+                            border-bottom: 2px solid #dee2e6;
+                        }
+                        .custom-red-table td {
+                            padding: 10px 16px;
+                            border-bottom: 1px solid #f1f3f5;
+                            color: #333333;
+                        }
+                        .custom-red-table tr:hover {
+                            background-color: #f8f9fa;
+                        }
+                    </style>
+                    """
+                    st.markdown(custom_css + html_table, unsafe_allow_html=True)
 
                 with tab_image:
                     with st.spinner("正在渲染卡片..."):

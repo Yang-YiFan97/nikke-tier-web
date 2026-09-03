@@ -3,126 +3,184 @@ import json
 import sqlite3
 import pandas as pd
 import streamlit as st
-from github_sync import push_db_to_github
+from PIL import Image
 
-from db_manager import equip_db_manager
-from card_generator import (
-    get_character_meta, 
-    SHORT_NAME_MAP, 
-    calculate_character_stats, 
-    load_priority_config, 
-    normalize_name
+# 引入已有模块
+import red
+from db_manager import equip_db_manager, EQUIP_DB_PATH
+
+# -----------------------------------------------------------------------------
+# 页面基础配置
+# -----------------------------------------------------------------------------
+st.set_page_config(
+    page_title="NIKKE 工具箱",
+    page_icon="📦",
+    layout="wide",
+    initial_sidebar_state="expanded"
 )
 
-# 页面基础配置
-st.set_page_config(page_title="妮姬装备词条统计", page_icon="🛡️", layout="wide")
-st.title("🛡️ 妮姬装备词条总览面板")
+# -----------------------------------------------------------------------------
+# 左侧导航栏 (Sidebar Navigation)
+# -----------------------------------------------------------------------------
+st.sidebar.title("📌 功能导航")
+app_mode = st.sidebar.radio(
+    "请选择功能页面：",
+    ["红球表查询", "装备词条查询"],
+    index=0
+)
+st.sidebar.markdown("---")
 
-# 属性对应颜色
-ELEMENT_COLORS = {
-    "燃烧": "background-color: #FFF0F0",
-    "水冷": "background-color: #F0F8FF",
-    "风压": "background-color: #F0FFF0",
-    "电击": "background-color: #F8F0FF",
-    "铁甲": "background-color: #F5F5F5",
-}
-ELEMENT_ORDER = {"燃烧": 1, "水冷": 2, "风压": 3, "电击": 4, "铁甲": 5}
+# =============================================================================
+# 功能页面 1：红球表查询
+# =============================================================================
+if app_mode == "红球表查询":
+    st.title("🔴 基地红球产出查询")
+    st.caption("基于关卡节点与基地等级，快速计算普通关通关下的困难关推进与芯尘速率里程碑")
 
-COLUMNS = [
-    ("优越", "优越代码伤害增加"),
-    ("攻击", "攻击力增加"),
-    ("装弹", "最大装弹数增加"),
-    ("暴伤", "暴击伤害增加"),
-    ("暴率", "暴击率增加"),
-    ("蓄速", "蓄力速度增加"),
-    ("蓄伤", "蓄力伤害增加"),
-    ("命中", "命中率增加"),
-    ("防御", "防御力增加")
-]
+    col_input, col_action = st.columns([2, 1])
+    with col_input:
+        chapter_num = st.number_input(
+            "选择或输入普通关章节数：",
+            min_value=1,
+            max_value=60,
+            value=34,
+            step=1,
+            help="计算在不漏怪通关该普通章节时，对应的困难关卡与基地等级"
+        )
+    with col_action:
+        st.write("") # 占位对齐
+        st.write("")
+        query_btn = st.button("🔍 查询红球节点", use_container_width=True)
 
-# 从本地获取所有用户（或指定用户）
-@st.cache_data(ttl=60)
-def load_all_data():
-    config = load_priority_config()
-    default_priorities = config.get("default", ["优越代码伤害增加", "攻击力增加", "暴击伤害增加", "暴击率增加"])
-    
-    with equip_db_manager.get_connection() as conn:
+    if query_btn or "last_chapter" not in st.session_state or st.session_state.last_chapter == chapter_num:
+        st.session_state.last_chapter = chapter_num
+        
+        # 检查依赖数据库是否存在
+        if not os.path.exists(red.STAGE_DB) or not os.path.exists(red.PROD_DB):
+            st.error(f"⚠️ 未找到关卡数据库 `{red.STAGE_DB}` 或 `{red.PROD_DB}`，请确认文件已上传至运行目录。")
+        else:
+            with st.spinner("正在计算关卡与红球数据..."):
+                nodes = red.generate_chapter_nodes(int(chapter_num))
+            
+            if not nodes:
+                st.warning(f"⚠️ 未在数据库中检索到第 {chapter_num} 章的关卡数据。")
+            else:
+                st.success(f"已生成【普通第 {chapter_num} 章】红球节点列表")
+
+                # 选项卡切换展示方式：原生表格 vs 原版图片卡片
+                tab_table, tab_image = st.tabs(["📊 结构化数据表", "🖼️ 原版卡片图片"])
+
+                with tab_table:
+                    # 组装 DataFrame 显示
+                    table_data = []
+                    for item in nodes:
+                        dust = item["actual_dust"]
+                        dust_display = int(dust) if dust == int(dust) else f"{dust:.2f}".rstrip('0').rstrip('.')
+                        table_data.append({
+                            "困难战役关卡": item["stage_name"],
+                            "对应基地等级": f"Lv.{item['target_level']}",
+                            "芯尘速率 (个/h)": dust_display
+                        })
+                    
+                    df = pd.DataFrame(table_data)
+                    st.dataframe(
+                        df,
+                        use_container_width=True,
+                        hide_index=True
+                    )
+
+                with tab_image:
+                    # 调用 red.py 原版渲染引擎渲染图片
+                    with st.spinner("正在渲染卡片..."):
+                        # 复用 render_image 的绘图逻辑，直接获取图片对象
+                        # 兼容原函数提取 base64 并在网页端渲染
+                        cq_code = red.render_image(int(chapter_num), nodes)
+                        # 从 CQ 码中截取 base64
+                        b64_str = cq_code.split("base64://")[-1].rstrip("]")
+                        
+                        import io
+                        import base64
+                        img_bytes = base64.b64decode(b64_str)
+                        st.image(img_bytes, caption=f"第 {chapter_num} 章红球卡片", use_container_width=False)
+
+
+# =============================================================================
+# 功能页面 2：装备词条查询
+# =============================================================================
+elif app_mode == "装备词条查询":
+    st.title("🛡️ 角色装备词条总览")
+    st.caption("在线检索并查看已录入的角色词条与 0 阶/总属性加成")
+
+    if not os.path.exists(EQUIP_DB_PATH):
+        st.info("⚠️ 数据库 `assets/装备词条.db` 尚未初始化或不存在任何数据。")
+    else:
+        conn = equip_db_manager.get_connection()
         cursor = conn.cursor()
-        cursor.execute("SELECT DISTINCT user_id, char_name FROM character_equips")
-        records = cursor.fetchall()
+        
+        # 1. 读取所有指挥官（user_id）列表
+        cursor.execute("SELECT DISTINCT user_id FROM character_equips")
+        user_rows = cursor.fetchall()
+        user_list = [r[0] for r in user_rows if r[0]]
 
-    rows = []
-    for user_id, char_name in records:
-        stats = equip_db_manager.get_character_stats(user_id, char_name)
-        all_equips = equip_db_manager.get_character_all_equips(user_id, char_name)
-        if not stats:
-            stats = calculate_character_stats(all_equips)
-            equip_db_manager.update_character_stats(user_id, char_name, stats)
+        if not user_list:
+            st.info("数据库中暂无指挥官装备记录。")
+            conn.close()
+        else:
+            selected_user = st.sidebar.selectbox("👤 选择指挥官", user_list)
 
-        # 统计有效词条分布
-        char_priorities = config.get(char_name, default_priorities)[:4]
-        counts = {p: 0 for p in char_priorities}
-        for eq in all_equips:
-            eq_has = set()
-            for eff in eq.get("effects", []):
-                raw_n = eff.get("name", "").strip()
-                val_s = eff.get("value", "").strip()
-                std_n = eff.get("std_name") or normalize_name(raw_n)
-                if std_n and "未获得" not in std_n and val_s:
-                    eq_has.add(std_n)
-            for std_n in eq_has:
-                if std_n in counts:
-                    counts[std_n] += 1
+            # 2. 查询该指挥官拥有的所有角色
+            cursor.execute("""
+                SELECT char_name, stats_json, updated_at 
+                FROM character_stats 
+                WHERE user_id = ? 
+                ORDER BY updated_at DESC
+            """, (selected_user,))
+            stats_rows = cursor.fetchall()
+            conn.close()
 
-        summary_list = [f"{counts[p]}{SHORT_NAME_MAP.get(p, p[:2])}" for p in char_priorities if counts[p] > 0]
-        summary_str = "、".join(summary_list) if summary_list else "无"
+            if not stats_rows:
+                st.warning("该指挥官名下暂无角色汇总数据。")
+            else:
+                # 角色过滤搜索
+                search_kw = st.text_input("🔍 搜索角色名称：", placeholder="输入角色名过滤...")
+                
+                display_records = []
+                for char_name, stats_json, updated_at in stats_rows:
+                    if search_kw and search_kw.strip().lower() not in char_name.lower():
+                        continue
+                    
+                    stats_dict = json.loads(stats_json) if stats_json else {}
+                    
+                    # 组装展现实体
+                    display_records.append({
+                        "角色": char_name,
+                        "更新时间": updated_at,
+                        "属性汇总详情": stats_dict
+                    })
 
-        total_tier = sum(v.get("total_tier", 0) for v in stats.values())
-        meta = get_character_meta(char_name)
-        elem = meta.get("element", "未知")
-
-        row = {
-            "用户ID": str(user_id),
-            "角色": char_name,
-            "属性": elem,
-            "总阶数": round(total_tier, 1),
-            "有效分布": summary_str
-        }
-        for short_n, full_n in COLUMNS:
-            v = stats.get(full_n, {}).get("total_num", 0.0)
-            row[short_n] = f"{v:.2f}%" if v > 0 else ""
-        rows.append(row)
-
-    df = pd.DataFrame(rows)
-    if not df.empty:
-        df["_order"] = df["属性"].map(lambda x: ELEMENT_ORDER.get(x, 99))
-        df = df.sort_values(by=["_order", "总阶数"], ascending=[True, False]).drop(columns=["_order"])
-    return df
-
-df = load_all_data()
-
-# 侧边栏筛选控件
-if not df.empty:
-    st.sidebar.header("🔍 筛选面板")
-    all_users = list(df["用户ID"].unique())
-    selected_user = st.sidebar.selectbox("选择指挥官账号", all_users)
-    
-    all_elements = ["全部"] + list(df["属性"].unique())
-    selected_element = st.sidebar.selectbox("筛选属性", all_elements)
-
-    # 过滤数据
-    filtered_df = df[df["用户ID"] == selected_user]
-    if selected_element != "全部":
-        filtered_df = filtered_df[filtered_df["属性"] == selected_element]
-
-    # 按属性给每行上色
-    def highlight_rows(row):
-        color = ELEMENT_COLORS.get(row["属性"], "")
-        return [color] * len(row)
-
-    styled_df = filtered_df.style.apply(highlight_rows, axis=1)
-
-    st.subheader(f"指挥官 [{selected_user}] 的角色装备词条")
-    st.dataframe(styled_df, use_container_width=True, height=600)
-else:
-    st.info("数据库中暂无词条记录，请先通过 Bot 录入！")
+                st.markdown(f"共检索到 **{len(display_records)}** 个角色记录")
+                
+                # 列表卡片展开展示
+                for item in display_records:
+                    with st.expander(f"📌 {item['角色']} (最近更新: {item['更新时间']})", expanded=False):
+                        stats = item["属性汇总详情"]
+                        if not stats:
+                            st.write("暂无属性汇总。")
+                        else:
+                            col_s1, col_s2 = st.columns(2)
+                            with col_s1:
+                                st.markdown("##### 🌟 0 阶有效词条属性")
+                                s0 = stats.get("0阶", stats.get("tier0", {}))
+                                if s0:
+                                    for k, v in s0.items():
+                                        st.write(f"- **{k}**: `{v}`")
+                                else:
+                                    st.caption("无 0 阶属性记录")
+                            with col_s2:
+                                st.markdown("##### ⚡ 总属性统计")
+                                s_all = stats.get("总属性", stats.get("total", {}))
+                                if s_all:
+                                    for k, v in s_all.items():
+                                        st.write(f"- **{k}**: `{v}`")
+                                else:
+                                    st.caption("无总属性记录")

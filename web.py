@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 
 # 引入项目业务与数据库管理器
-import red
+import red[cite: 2]
 from db_manager import equip_db_manager, EQUIP_DB_PATH
 
 # -----------------------------------------------------------------------------
@@ -36,33 +36,36 @@ if app_mode == "红球表查询":
     st.title("🔴 基地红球产出查询")
     st.caption("基于关卡节点与基地等级，快速计算普通关通关下的困难关推进与芯尘速率里程碑")
 
-    col_input, col_action = st.columns([2, 1])
-    with col_input:
-        chapter_num = st.number_input(
-            "选择或输入普通关章节数：",
-            min_value=1,
-            max_value=60,
-            value=34,
-            step=1,
-            help="计算在不漏怪通关该普通章节时，对应的困难关卡与基地等级"
-        )
-    with col_action:
-        st.write("")
-        st.write("")
-        query_btn = st.button("🔍 查询红球节点", use_container_width=True)
+    # 使用 st.form 包裹，实现敲回车键自动提交查询
+    with st.form("red_query_form", border=False):
+        col_input, col_action = st.columns([2, 1])
+        with col_input:
+            chapter_num = st.number_input(
+                "输入章节数",
+                min_value=1,
+                max_value=60,
+                value=st.session_state.get("last_chapter", 34),
+                step=1,
+                help="计算在不漏怪通关该普通章节时，对应的困难关卡与基地等级"
+            )
+        with col_action:
+            st.write("")
+            st.write("")
+            query_btn = st.form_submit_button("🔍 查询红球节点", use_container_width=True)
 
-    if query_btn or "last_chapter" not in st.session_state or st.session_state.last_chapter == chapter_num:
-        st.session_state.last_chapter = chapter_num
+    # 首次进入页面或用户按回车/点击按钮时触发
+    if query_btn or "last_chapter" not in st.session_state:
+        st.session_state.last_chapter = int(chapter_num)
         
-        # 验证底层数据库文件是否存在
-        if not os.path.exists(red.STAGE_DB) or not os.path.exists(red.PROD_DB):
-            st.error(f"⚠️ 未找到关卡数据库 `{red.STAGE_DB}` 或 `{red.PROD_DB}`，请确认文件已上传至运行目录。")
+        # 验证底层数据库文件是否存在[cite: 2]
+        if not os.path.exists(red.STAGE_DB) or not os.path.exists(red.PROD_DB):[cite: 2]
+            st.error(f"⚠️ 未找到关卡数据库 `{red.STAGE_DB}` 或 `{red.PROD_DB}`，请确认文件已上传至运行目录。")[cite: 2]
         else:
             with st.spinner("正在计算关卡与红球数据..."):
-                nodes = red.generate_chapter_nodes(int(chapter_num))
+                nodes = red.generate_chapter_nodes(int(chapter_num))[cite: 2]
             
             if not nodes:
-                st.warning(f"⚠️ 未在数据库中检索到第 {chapter_num} 章的关卡数据。")
+                st.warning(f"⚠️ 未在数据库中检索到第 {chapter_num} 章的关卡数据。")[cite: 2]
             else:
                 st.success(f"已生成【普通第 {chapter_num} 章】红球节点列表")
 
@@ -84,7 +87,7 @@ if app_mode == "红球表查询":
 
                 with tab_image:
                     with st.spinner("正在渲染卡片..."):
-                        cq_code = red.render_image(int(chapter_num), nodes)
+                        cq_code = red.render_image(int(chapter_num), nodes)[cite: 2]
                         b64_str = cq_code.split("base64://")[-1].rstrip("]")
                         img_bytes = base64.b64decode(b64_str)
                         st.image(img_bytes, caption=f"第 {chapter_num} 章红球卡片", use_container_width=False)

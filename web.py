@@ -5,7 +5,7 @@ import pandas as pd
 import streamlit as st
 
 # 引入项目业务与数据库管理器
-import red[cite: 2]
+import red
 from db_manager import equip_db_manager, EQUIP_DB_PATH
 
 # -----------------------------------------------------------------------------
@@ -57,15 +57,15 @@ if app_mode == "红球表查询":
     if query_btn or "last_chapter" not in st.session_state:
         st.session_state.last_chapter = int(chapter_num)
         
-        # 验证底层数据库文件是否存在[cite: 2]
-        if not os.path.exists(red.STAGE_DB) or not os.path.exists(red.PROD_DB):[cite: 2]
-            st.error(f"⚠️ 未找到关卡数据库 `{red.STAGE_DB}` 或 `{red.PROD_DB}`，请确认文件已上传至运行目录。")[cite: 2]
+        # 验证底层数据库文件是否存在
+        if not os.path.exists(red.STAGE_DB) or not os.path.exists(red.PROD_DB):
+            st.error(f"⚠️ 未找到关卡数据库 `{red.STAGE_DB}` 或 `{red.PROD_DB}`，请确认文件已上传至运行目录。")
         else:
             with st.spinner("正在计算关卡与红球数据..."):
-                nodes = red.generate_chapter_nodes(int(chapter_num))[cite: 2]
+                nodes = red.generate_chapter_nodes(int(chapter_num))
             
             if not nodes:
-                st.warning(f"⚠️ 未在数据库中检索到第 {chapter_num} 章的关卡数据。")[cite: 2]
+                st.warning(f"⚠️ 未在数据库中检索到第 {chapter_num} 章的关卡数据。")
             else:
                 st.success(f"已生成【普通第 {chapter_num} 章】红球节点列表")
 
@@ -87,7 +87,7 @@ if app_mode == "红球表查询":
 
                 with tab_image:
                     with st.spinner("正在渲染卡片..."):
-                        cq_code = red.render_image(int(chapter_num), nodes)[cite: 2]
+                        cq_code = red.render_image(int(chapter_num), nodes)
                         b64_str = cq_code.split("base64://")[-1].rstrip("]")
                         img_bytes = base64.b64decode(b64_str)
                         st.image(img_bytes, caption=f"第 {chapter_num} 章红球卡片", use_container_width=False)

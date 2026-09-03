@@ -1,0 +1,682 @@
+{
+  "雪子": {
+    "aliases": ["雪子"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "反常",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "QUEEN(真）": {
+    "aliases": ["QUEEN(真）", "真"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "反常",
+    "weapon": "SG",
+    "burst": "III"
+  },
+  "麦斯威尔：平凡技师": {
+    "aliases": ["麦斯威尔：平凡技师","新麦", "技师"],
+    "class": "辅助型",
+    "element": "风压",
+    "company": "米西利斯",
+    "weapon": "SR",
+    "burst": "II"
+  },
+  "拉普拉斯：究极英雄": {
+    "aliases": ["拉普拉斯：究极英雄", "究极英雄", "超拉"],
+    "class": "火力型",
+    "element": "风压",
+    "company": "米西利斯",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "玛律恰那：海洋进修": {
+    "aliases": ["玛律恰那：海洋进修", "水玛", "泳装玛律恰那"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "极乐净土",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "灰姑娘：琉璃波光": {
+    "aliases": ["灰姑娘：琉璃波光", "水灰", "泳装灰"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "朝圣者",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "方舟黑色游侠": {
+    "aliases": ["方舟黑色游侠", "游侠"],
+    "class": "火力型",
+    "element": "风压",
+    "company": "泰特拉",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "普莉卡": {
+    "aliases": ["普莉卡"],
+    "class": "辅助型",
+    "element": "水冷",
+    "company": "泰特拉",
+    "weapon": "SR",
+    "burst": "II"
+  },
+  "敏特": {
+    "aliases": ["敏特"],
+    "class": "辅助型",
+    "element": "铁甲",
+    "company": "泰特拉",
+    "weapon": "RL",
+    "burst": "II"
+  },
+  "尼恩：透视之眼": {
+    "aliases": ["尼恩：透视之眼", "尼恩", "超尼", "超尼恩"],
+    "class": "火力型",
+    "element": "电击",
+    "company": "米西利斯",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "阿妮斯：超级巨星": {
+    "aliases": ["阿妮斯：超级巨星", "超阿", "星阿"],
+    "class": "防御型",
+    "element": "电击",
+    "company": "泰特拉",
+    "weapon": "RL",
+    "burst": "I"
+  },
+  "阿尔卡娜：命运伴侣": {
+    "aliases": ["阿尔卡娜：命运伴侣"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "SG",
+    "burst": "II"
+  },
+  "薇尔维特": {
+    "aliases": ["薇尔维特"],
+    "class": "辅助型",
+    "element": "风压",
+    "company": "泰特拉",
+    "weapon": "SR",
+    "burst": "II"
+  },
+  "蕾贝儿": {
+    "aliases": ["蕾贝儿"],
+    "class": "防御型",
+    "element": "铁甲",
+    "company": "极乐净土",
+    "weapon": "AR",
+    "burst": "I"
+  },
+  "白雪公主：重型武装": {
+    "aliases": ["白雪公主：重型武装", "重装白雪"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "朝圣者",
+    "weapon": "SR",
+    "burst": "III"
+  },
+  "布丽德：静默轨道": {
+    "aliases": ["布丽德：静默轨道", "布丽德"],
+    "class": "辅助型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "SG",
+    "burst": "II"
+  },
+  "迪塞尔：冬日甜心": {
+    "aliases": ["迪塞尔：冬日甜心", "迪塞尔", "草莓糖"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "索林：霜之旅票": {
+    "aliases": ["索林：霜之旅票", "索林", "冬索林"],
+    "class": "辅助型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "SG",
+    "burst": "I"
+  },
+  "莉贝雷利奥": {
+    "aliases": ["莉贝雷利奥", "水母"],
+    "class": "火力型",
+    "element": "风压",
+    "company": "朝圣者",
+    "weapon": "SR",
+    "burst": "III"
+  },
+  "娜由塔": {
+    "aliases": ["娜由塔", "奶油糖"],
+    "class": "辅助型",
+    "element": "风压",
+    "company": "朝圣者",
+    "weapon": "SMG",
+    "burst": "II"
+  },
+  "德尔塔：怪盗忍者": {
+    "aliases": ["德尔塔：怪盗忍者", "德尔塔", "忍者", "怪盗"],
+    "class": "防御型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "MG",
+    "burst": "II"
+  },
+  "爱德：特务兔女郎": {
+    "aliases": ["爱德：特务兔女郎", "爱德", "兔爱德"],
+    "class": "辅助型",
+    "element": "铁甲",
+    "company": "泰特拉",
+    "weapon": "SR",
+    "burst": "II"
+  },
+  "贝斯蒂：战术升级": {
+    "aliases": ["贝斯蒂：战术升级", "贝斯蒂"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "银华：战术升级": {
+    "aliases": ["银华：战术升级", "银华"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "SR",
+    "burst": "II"
+  },
+  "艾玛：战术升级": {
+    "aliases": ["艾玛：战术升级", "艾玛"],
+    "class": "辅助型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "MG",
+    "burst": "I"
+  },
+  "伊莱格：BOOM与惊吓": {
+    "aliases": ["伊莱格：BOOM与惊吓","伊莱格","boom", "BOOM"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "米西利斯",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "桃乐丝：机缘巧遇": {
+    "aliases": ["桃乐丝：机缘巧遇", "水桃", "水蜜桃"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "朝圣者",
+    "weapon": "SG",
+    "burst": "III"
+  },
+  "渡鸦": {
+    "aliases": ["渡鸦"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "反常",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "伊芙": {
+    "aliases": ["伊芙", "eve"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "反常",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "阿尔卡娜": {
+    "aliases": ["阿尔卡娜", "阿卡"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "极乐净土",
+    "weapon": "RL",
+    "burst": "II"
+  },
+  "米哈拉：羁绊锁链": {
+    "aliases": ["米哈拉：羁绊锁链", "米哈拉"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "米西利斯",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "小美人鱼": {
+    "aliases": ["小美人鱼", "塞莲"],
+    "class": "辅助型",
+    "element": "风压",
+    "company": "朝圣者",
+    "weapon": "SMG",
+    "burst": "I"
+  },
+  "布蕾德": {
+    "aliases": ["布蕾德"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "泰特拉",
+    "weapon": "SR",
+    "burst": "III"
+  },
+  "特蕾娜": {
+    "aliases": ["特蕾娜", "奶牛"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "米西利斯",
+    "weapon": "RL",
+    "burst": "II"
+  },
+  "安克：天真的女仆": {
+    "aliases": ["安克：天真的女仆", "安克", "女仆安克"],
+    "class": "辅助型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "RL",
+    "burst": "II"
+  },
+  "马斯特：浪漫的女仆": {
+    "aliases": ["马斯特：浪漫的女仆", "女仆马斯特", "女仆马"],
+    "class": "辅助型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "MG",
+    "burst": "II"
+  },
+  "玛娜": {
+    "aliases": ["玛娜"],
+    "class": "火力型",
+    "element": "风压",
+    "company": "米西利斯",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "拉毗：小红帽": {
+    "aliases": ["拉毗：小红帽", "拉毗"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "吉萝婷：寒冬杀手": {
+    "aliases": ["吉萝婷：寒冬杀手", "吉萝婷"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "梅登：冰玫瑰": {
+    "aliases": ["梅登：冰玫瑰", "梅登"],
+    "class": "防御型",
+    "element": "电击",
+    "company": "极乐净土",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "格拉维": {
+    "aliases": ["格拉维"],
+    "class": "辅助型",
+    "element": "燃烧",
+    "company": "朝圣者",
+    "weapon": "AR",
+    "burst": "II"
+  },
+  "灰姑娘": {
+    "aliases": ["灰姑娘", "牢灰"],
+    "class": "防御型",
+    "element": "电击",
+    "company": "朝圣者",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "潘托姆": {
+    "aliases": ["潘托姆"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "坎西：逃生女王": {
+    "aliases": ["坎西：逃生女王", "坎西"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "米西利斯",
+    "weapon": "SMG",
+    "burst": "III"
+  },
+  "露姬": {
+    "aliases": ["露姬"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "泰特拉",
+    "weapon": "SR",
+    "burst": "I"
+  },
+  "茨瓦伊": {
+    "aliases": ["茨瓦伊"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "极乐净土",
+    "weapon": "SG",
+    "burst": "I"
+  },
+  "爱因": {
+    "aliases": ["爱因"],
+    "class": "火力型",
+    "element": "电击",
+    "company": "米西利斯",
+    "weapon": "SR",
+    "burst": "III"
+  },
+  "罗珊娜：高雅海洋": {
+    "aliases": ["罗珊娜：高雅海洋", "泳装罗", "水罗"],
+    "class": "辅助型",
+    "element": "风压",
+    "company": "泰特拉",
+    "weapon": "AR",
+    "burst": "II"
+  },
+  "索达：闪亮兔女郎": {
+    "aliases": ["索达：闪亮兔女郎", "索达", "兔索达"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "泰特拉",
+    "weapon": "SG",
+    "burst": "III"
+  },
+  "皇冠": {
+    "aliases": ["皇冠"],
+    "class": "防御型",
+    "element": "铁甲",
+    "company": "朝圣者",
+    "weapon": "MG",
+    "burst": "II"
+  },
+  "贝伊": {
+    "aliases": ["贝伊"],
+    "class": "防御型",
+    "element": "燃烧",
+    "company": "泰特拉",
+    "weapon": "RL",
+    "burst": "II"
+  },
+  "D:杀手妻子": {
+    "aliases": ["D:杀手妻子", "D7", "D妻"],
+    "class": "辅助型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "SR",
+    "burst": "I"
+  },
+  "牡丹": {
+    "aliases": ["牡丹"],
+    "class": "防御型",
+    "element": "电击",
+    "company": "泰特拉",
+    "weapon": "AR",
+    "burst": "I"
+  },
+  "莱昂纳": {
+    "aliases": ["莱昂纳"],
+    "class": "辅助型",
+    "element": "水冷",
+    "company": "泰特拉",
+    "weapon": "SG",
+    "burst": "II"
+  },
+  "红莲：暗影": {
+    "aliases": ["红莲：暗影", "黑莲"],
+    "class": "火力型",
+    "element": "风压",
+    "company": "朝圣者",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "鲁德米拉：冬日之主": {
+    "aliases": ["鲁德米拉：冬日之主","女王", "冬女王"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "泰特拉",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "托比": {
+    "aliases": ["托比"],
+    "class": "辅助型",
+    "element": "水冷",
+    "company": "米西利斯",
+    "weapon": "AR",
+    "burst": "I"
+  },
+  "小红帽": {
+    "aliases": ["小红帽", "帽"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "朝圣者",
+    "weapon": "SR",
+    "burst": "Λ"
+  },
+  "娜嘉": {
+    "aliases": ["娜嘉", "黑jk"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "米西利斯",
+    "weapon": "SG",
+    "burst": "II"
+  },
+  "海伦：海蓝宝石": {
+    "aliases": ["海伦：海蓝宝石", "水海伦", "泳装海伦"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "极乐净土",
+    "weapon": "AR",
+    "burst": "II"
+  },
+  "阿妮斯：闪耀夏日": {
+    "aliases": ["阿妮斯：闪耀夏日", "水阿"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "泰特拉",
+    "weapon": "SG",
+    "burst": "III"
+  },
+  "尼罗": {
+    "aliases": ["尼罗"],
+    "class": "防御型",
+    "element": "燃烧",
+    "company": "泰特拉",
+    "weapon": "SMG",
+    "burst": "II"
+  },
+  "尼恩：蓝色海洋": {
+    "aliases": ["尼恩：蓝色海洋", "水尼恩", "徒弟"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "罗珊娜": {
+    "aliases": ["罗珊娜","罗"],
+    "class": "火力型",
+    "element": "电击",
+    "company": "泰特拉",
+    "weapon": "MG",
+    "burst": "I"
+  },
+  "布兰儿": {
+    "aliases": ["布兰儿", "白兔"],
+    "class": "防御型",
+    "element": "风压",
+    "company": "泰特拉",
+    "weapon": "AR",
+    "burst": "II"
+  },
+  "桃乐丝": {
+    "aliases": ["桃乐丝", "桃子", "粉毛", "Doro"],
+    "class": "辅助型",
+    "element": "水冷",
+    "company": "朝圣者",
+    "weapon": "AR",
+    "burst": "I"
+  },
+  "饼干": {
+    "aliases": ["饼干"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "泰特拉",
+    "weapon": "RL",
+    "burst": "II"
+  },
+  "毒蛇": {
+    "aliases": ["毒蛇"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "泰特拉",
+    "weapon": "SG",
+    "burst": "II"
+  },
+  "豺狼": {
+    "aliases": ["豺狼"],
+    "class": "防御型",
+    "element": "铁甲",
+    "company": "米西利斯",
+    "weapon": "RL",
+    "burst": "I"
+  },
+  "神罚": {
+    "aliases": ["神罚"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "朝圣者",
+    "weapon": "MG",
+    "burst": "III"
+  },
+  "拉普拉斯": {
+    "aliases": ["拉普拉斯", "lpls"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "米西利斯",
+    "weapon": "RL",
+    "burst": "III"
+  },
+  "海伦": {
+    "aliases": ["海伦"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "SR",
+    "burst": "III"
+  },
+  "红莲": {
+    "aliases": ["红莲"],
+    "class": "火力型",
+    "element": "电击",
+    "company": "朝圣者",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "诺伊斯": {
+    "aliases": ["诺伊斯"],
+    "class": "辅助型",
+    "element": "电击",
+    "company": "泰特拉",
+    "weapon": "RL",
+    "burst": "I"
+  },
+  "爱丽丝": {
+    "aliases": ["爱丽丝"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "泰特拉",
+    "weapon": "SR",
+    "burst": "III"
+  },
+  "普丽瓦蒂": {
+    "aliases": ["普丽瓦蒂", "初音"],
+    "class": "火力型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "舒格": {
+    "aliases": ["舒格"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "泰特拉",
+    "weapon": "SG",
+    "burst": "III"
+  },
+  "德雷克": {
+    "aliases": ["德雷克"],
+    "class": "火力型",
+    "element": "燃烧",
+    "company": "米西利斯",
+    "weapon": "SG",
+    "burst": "III"
+  },
+  "麦斯威尔": {
+    "aliases": ["麦斯威尔", "老麦"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "米西利斯",
+    "weapon": "SR",
+    "burst": "III"
+  },
+  "白雪公主": {
+    "aliases": ["白雪公主", "白雪"],
+    "class": "火力型",
+    "element": "铁甲",
+    "company": "朝圣者",
+    "weapon": "AR",
+    "burst": "III"
+  },
+  "桑迪": {
+    "aliases": ["桑迪"],
+    "class": "防御型",
+    "element": "铁甲",
+    "company": "米西利斯",
+    "weapon": "RL",
+    "burst": "II"
+  },
+  "波莉": {
+    "aliases": ["波莉"],
+    "class": "防御型",
+    "element": "水冷",
+    "company": "极乐净土",
+    "weapon": "SG",
+    "burst": "II"
+  },
+  "米兰达": {
+    "aliases": ["米兰达"],
+    "class": "辅助型",
+    "element": "燃烧",
+    "company": "极乐净土",
+    "weapon": "SMG",
+    "burst": "I"
+  },
+  "丽塔": {
+    "aliases": ["丽塔"],
+    "class": "辅助型",
+    "element": "铁甲",
+    "company": "米西利斯",
+    "weapon": "SMG",
+    "burst": "I"
+  },
+  "伊莎贝尔": {
+    "aliases": ["伊莎贝尔", "伊莎"],
+    "class": "火力型",
+    "element": "电击",
+    "company": "朝圣者",
+    "weapon": "SG",
+    "burst": "III"
+  }
+}

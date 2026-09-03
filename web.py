@@ -3,6 +3,7 @@ import json
 import sqlite3
 import pandas as pd
 import streamlit as st
+from github_sync import push_db_to_github
 
 from db_manager import equip_db_manager
 from card_generator import (

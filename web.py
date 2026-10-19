@@ -15,6 +15,18 @@ st.set_page_config(
 )
 st.markdown(f"<style>{Path(__file__).with_name('styles.css').read_text()}</style>", unsafe_allow_html=True)
 
+# Inline the local avatar so the attribution needs no external image host or link.
+avatar_data = base64.b64encode(
+    Path(__file__).with_name("assets").joinpath("creator-avatar.jpg").read_bytes()
+).decode("ascii")
+st.markdown(
+    '<div class="creator-credit" aria-label="created by 萌萌">'
+    f'<img src="data:image/jpeg;base64,{avatar_data}" alt="萌萌的头像">'
+    '<span>created by <strong>萌萌</strong></span></div>',
+    unsafe_allow_html=True,
+)
+
+
 
 def page_header(title, subtitle, status):
     st.markdown(

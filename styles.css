@@ -93,35 +93,14 @@ html, body, [class*="css"] { font-family: "Inter", "Noto Sans SC", "Microsoft Ya
 [data-testid="stSidebar"] [data-testid="stRadio"], [data-testid="stSidebar"] [role="radiogroup"] { width: 100%; }
 [data-testid="stSidebar"] [role="radiogroup"] > div { width: 100%; }
 
-/* Replace Community Cloud's default linked author badge with a local credit. */
-[class*="viewerBadge_container"],
-[class*="viewerBadge_link"],
+/* Hide hosted author/profile badges and the floating management controls.
+   Match the component name, rather than a generated CSS-module hash. */
+[class*="viewerBadge"],
+[class*="profileContainer"],
+[class*="profilePreview"],
 [data-testid="stAppViewerBadge"],
-[data-testid="stAppCreatorAvatar"] { display: none !important; }
-.creator-credit {
-  position: fixed;
-  right: max(18px, env(safe-area-inset-right));
-  bottom: max(14px, env(safe-area-inset-bottom));
-  z-index: 2147483647;
-  display: flex;
-  align-items: center;
-  gap: 9px;
-  padding: 7px 13px 7px 7px;
-  border: 1px solid #dce8f8;
-  border-radius: 28px;
-  background: #fff;
-  box-shadow: 0 3px 12px #183b6512;
-  color: #7f98b7;
-  font-size: 12px;
-  line-height: 1.4;
-  cursor: default;
+[data-testid="stAppCreatorAvatar"],
+[data-testid="stStatusWidget"],
+[data-testid="manage-app-button"] {
+  display: none !important;
 }
-.creator-credit img {
-  display: block;
-  width: 32px;
-  height: 32px;
-  border-radius: 50%;
-  object-fit: cover;
-}
-.creator-credit strong { color: #234365; font-weight: 600; }
-[data-testid="stMainBlockContainer"] { padding-bottom: 90px; }
